@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" width="640" height="200">
+  <title>Nexo — by Darckware</title>
+  <defs>
+    <linearGradient id="neonNX" gradientUnits="userSpaceOnUse" x1="30" y1="30" x2="96" y2="96">
+      <stop offset="0%" stop-color="#5CF2C4"/>
+      <stop offset="100%" stop-color="#3DAEFF"/>
+    </linearGradient>
+    <filter id="glowNX" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="640" height="200" fill="#0B0D10"/>
+
+  <!-- Icon: hub-and-spoke nexus, evoking the overlay mesh network -->
+  <g transform="translate(40,40)">
+    <rect x="0" y="0" width="120" height="120" rx="26" fill="#12151A"/>
+    <g filter="url(#glowNX)" fill="none" stroke="url(#neonNX)" stroke-width="5" stroke-linecap="round">
+      <line x1="60" y1="60" x2="30" y2="30"/>
+      <line x1="60" y1="60" x2="90" y2="34"/>
+      <line x1="60" y1="60" x2="66" y2="96"/>
+    </g>
+    <g filter="url(#glowNX)" fill="url(#neonNX)">
+      <circle cx="30" cy="30" r="6.5"/>
+      <circle cx="90" cy="34" r="6.5"/>
+      <circle cx="66" cy="96" r="6.5"/>
+      <circle cx="60" cy="60" r="10"/>
+    </g>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="200" y="120" font-family="Arial, Helvetica, sans-serif" font-weight="700"
+        font-size="72" letter-spacing="2" fill="#F2F4F7">NEXO</text>
+
+  <!-- Tagline -->
+  <text x="202" y="148" font-family="Arial, Helvetica, sans-serif" font-weight="400"
+        font-size="18" letter-spacing="1.5" fill="#7C8794">POR DARCKWARE · CÓDIGO ABERTO</text>
+</svg>
