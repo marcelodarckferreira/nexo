@@ -1,9 +1,9 @@
-# Remoto — Design de Arquitetura
+# Nexo — Design de Arquitetura
 
-**Projeto:** Remoto
+**Projeto:** Nexo
 **Autor:** Marcelo (via Porthus / Claude Code)
 **Data:** 2026-09-04
-**Versão:** 1.2
+**Versão:** 1.3
 **Status:** Aprovado para plano de implementação
 **Classificação:** Uso interno
 
@@ -11,9 +11,9 @@
 
 ## 1. Objetivo
 
-O Remoto é uma plataforma de gerenciamento remoto autorizado de máquinas, servidores e redes
+O Nexo é uma plataforma de gerenciamento remoto autorizado de máquinas, servidores e redes
 pertencentes ou explicitamente autorizadas pelo administrador. O acesso é operado através de uma
-CLI administrativa (`remotoctl`), com um agente instalado nos dispositivos gerenciados e um
+CLI administrativa (`nexoctl`), com um agente instalado nos dispositivos gerenciados e um
 servidor central de gestão.
 
 A arquitetura minimiza ao máximo a conectividade inbound: nem o agente remoto nem o servidor de
@@ -28,7 +28,7 @@ Este documento **não** especifica, e a implementação **não deve** incluir:
 - qualquer mecanismo de ocultação de processo, evasão de EDR/antivírus, ou desativação de firewall;
 - persistência furtiva ou command-and-control não identificável ao usuário do dispositivo;
 - bypass de autenticação, bypass de proxy corporativo ou bypass de DPI;
-- acesso a qualquer dispositivo sem enrollment explícito e autorizado pelo administrador do Remoto.
+- acesso a qualquer dispositivo sem enrollment explícito e autorizado pelo administrador do Nexo.
 
 Todo agente é visível, identificável, desinstalável pelo usuário local e reportado no inventário
 central. O objetivo é suporte remoto e administração de infraestrutura autorizada — não vigilância
@@ -43,8 +43,9 @@ alternativa conservadora, marcada como `ASSUMPTION`, com uma rota clara de subst
 
 | Variável | Valor | Origem |
 |---|---|---|
-| `PROJECT_NAME` | `Remoto` | ASSUMPTION — deriva do nome do diretório/hostname |
-| `CLI_NAME` | `remotoctl` | ASSUMPTION — evita colisão com o nome do produto |
+| `PROJECT_NAME` | `Nexo` | Decidido pelo usuário em 2026-09-05. O hostname `remoto.darckware.net` permanece como endpoint técnico — não muda com o nome da marca |
+| `CLI_NAME` | `nexoctl` | Decorre do `PROJECT_NAME` |
+| `LICENSE_MODEL` | Gratuito e de código aberto (MPL-2.0) | Decidido pelo usuário em 2026-09-05 — mesma licença do ForgeRouter, outro produto open-source da Darckware |
 | `SERVER_OS` | Linux | ASSUMPTION — consistente com o restante da infraestrutura do operador |
 | `AGENT_OS_LIST` | Linux, Windows, macOS | ASSUMPTION — os três já são suportados pelos clientes Tailscale/Headscale reaproveitados |
 | `IMPLEMENTATION_LANGUAGE` | Go | ASSUMPTION — nenhum padrão organizacional obriga linguagem; Go interopera com o código-fonte do Headscale e compila agentes single-binary para os três SOs |
@@ -190,12 +191,12 @@ configuração explícita e é registrada em audit log.
 ## 5. Componentes do produto
 
 Os planos B/C/D fornecem a infraestrutura de rede e identidade (Headscale). Os componentes abaixo
-são o produto Remoto propriamente dito, construídos por cima dessa infraestrutura:
+são o produto Nexo propriamente dito, construídos por cima dessa infraestrutura:
 
 | Componente | Responsabilidade |
 |---|---|
 | **Management Server** | Orquestra enrollment, autenticação, políticas de ACL, sessões de suporte, audit logging e observabilidade. Consome a API do Headscale para gestão de dispositivos e rede. |
-| **`remotoctl` (CLI administrativa)** | Interface de operação: enrollment de dispositivos, gestão de ACLs, abertura/encerramento de sessões de suporte, consulta de audit log, status de agentes. |
+| **`nexoctl` (CLI administrativa)** | Interface de operação: enrollment de dispositivos, gestão de ACLs, abertura/encerramento de sessões de suporte, consulta de audit log, status de agentes. |
 | **Remote Agent** | Processo instalado no dispositivo gerenciado. Combina o cliente Tailscale/Headscale (overlay) com um agente de controle próprio (heartbeat, metadados, execução de comandos autorizados). |
 | **HTTPS Gateway / Reverse Proxy** | Plane A. Publica serviços internos (`127.0.0.1:3333`) via `remoto.darckware.net`. |
 | **Motor de sessões e audit logging** | Registra toda sessão de suporte/administração (quem, quando, para qual dispositivo, o que foi executado), com retenção e formato compatíveis com os padrões organizacionais de governança de dados. |
@@ -253,7 +254,7 @@ próprio plano de implementação (via skill `writing-plans`), depois desta spec
 
 1. **Fase 1 — Overlay e identidade (Planes B+C+D):** incorporação do Headscale, enrollment de
    dispositivo, ACLs básicas, SSH funcional sobre a overlay.
-2. **Fase 2 — Management Server e `remotoctl` (v1):** CLI mínima cobrindo enrollment, status e
+2. **Fase 2 — Management Server e `nexoctl` (v1):** CLI mínima cobrindo enrollment, status e
    ACLs administradas via Management Server (não diretamente no Headscale).
 3. **Fase 3 — Plane A (Cloudflare/Gateway):** publicação de `127.0.0.1:3333` via
    `remoto.darckware.net`, com os dois modos de conectividade coexistindo.

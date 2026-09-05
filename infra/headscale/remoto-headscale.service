@@ -1,5 +1,5 @@
 [Unit]
-Description=Remoto — Headscale coordination server
+Description=Nexo — Headscale coordination server
 After=network-online.target
 Wants=network-online.target
 
