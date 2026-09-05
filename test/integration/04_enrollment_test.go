@@ -74,9 +74,9 @@ func TestThreeDevicesEnrolled(t *testing.T) {
 
 	waitForNodeCount(t, 3, 30*time.Second)
 
-	supportIP := tailscaleIP(t, "remoto-dev-support-pc")
-	agentAIP := tailscaleIP(t, "remoto-dev-agent-a")
-	agentBIP := tailscaleIP(t, "remoto-dev-agent-b")
+	supportIP := tailscaleIP(t, supportPCContainer)
+	agentAIP := tailscaleIP(t, agentAContainer)
+	agentBIP := tailscaleIP(t, agentBContainer)
 
 	for name, ip := range map[string]string{"support-pc": supportIP, "agent-a": agentAIP, "agent-b": agentBIP} {
 		if ip == "" {

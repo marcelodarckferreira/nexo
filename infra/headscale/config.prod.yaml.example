@@ -21,13 +21,20 @@ database:
 
 policy:
   mode: file
-  path: /etc/headscale/acl-policy.hujson  # CHANGEME: copiar a política real, nunca a de dev
+  path: /etc/headscale/acl-policy.hujson  # CHANGEME: derivar de infra/headscale/acl-policy.hujson
+                                           # (política de dev) trocando marcelo@ pelo usuário
+                                           # admin real — ver runbook de deploy, passo 3.
 
 dns:
   magic_dns: false
   base_domain: remoto.darckware.net  # CHANGEME se o domínio mudar
   override_local_dns: false
 
+# DECISÃO PENDENTE (antes da Fase 3): esta configuração usa o DERP público da Tailscale Inc.
+# como relay de fallback (controlplane.tailscale.com). Isso funciona, mas depende de
+# infraestrutura de terceiros e pode expor metadados de conexão (quem fala com quem, quando)
+# para tráfego que não conseguir estabelecer caminho direto. Alternativa: hospedar o próprio
+# servidor DERP (derp.server.enabled: true) para manter tudo dentro da infraestrutura própria.
 derp:
   server:
     enabled: false

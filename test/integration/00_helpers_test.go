@@ -11,9 +11,12 @@ import (
 )
 
 const (
-	composeFile          = "../../docker-compose.dev.yml"
-	headscaleContainer   = "remoto-dev-headscale"
-	headscaleBaseURL     = "http://127.0.0.1:8080"
+	composeFile        = "../../docker-compose.dev.yml"
+	headscaleContainer = "remoto-dev-headscale"
+	headscaleBaseURL   = "http://127.0.0.1:8080"
+	supportPCContainer = "remoto-dev-support-pc"
+	agentAContainer    = "remoto-dev-agent-a"
+	agentBContainer    = "remoto-dev-agent-b"
 )
 
 func runCmd(t *testing.T, name string, args ...string) string {
