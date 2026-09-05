@@ -1,0 +1,41 @@
+# Copie para /etc/headscale/config.yaml no servidor e ajuste os valores marcados com CHANGEME.
+server_url: https://remoto.darckware.net  # CHANGEME se o domínio mudar
+listen_addr: 127.0.0.1:8080  # Plane A (reverse proxy/Cloudflare Tunnel) fala com este endereço,
+                              # NUNCA 0.0.0.0, conforme requisito de não expor a porta diretamente.
+metrics_listen_addr: 127.0.0.1:9090
+grpc_listen_addr: 127.0.0.1:50443
+grpc_allow_insecure: false
+
+noise:
+  private_key_path: /var/lib/headscale/noise_private.key
+
+prefixes:
+  v4: 100.64.0.0/10
+  v6: fd7a:115c:a1e0::/48
+
+database:
+  type: sqlite
+  sqlite:
+    path: /var/lib/headscale/db.sqlite
+    write_ahead_log: true
+
+policy:
+  mode: file
+  path: /etc/headscale/acl-policy.hujson  # CHANGEME: copiar a política real, nunca a de dev
+
+dns:
+  magic_dns: false
+  base_domain: remoto.darckware.net  # CHANGEME se o domínio mudar
+  override_local_dns: false
+
+derp:
+  server:
+    enabled: false
+  urls:
+    - https://controlplane.tailscale.com/derpmap/default
+  paths: []
+  auto_update_enabled: true
+  update_frequency: 24h
+
+log:
+  level: info
