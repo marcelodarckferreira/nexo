@@ -3,7 +3,7 @@
 **Projeto:** Remoto
 **Autor:** Marcelo (via Porthus / Claude Code)
 **Data:** 2026-09-04
-**Versão:** 1.1
+**Versão:** 1.2
 **Status:** Aprovado para plano de implementação
 **Classificação:** Uso interno
 
@@ -48,7 +48,7 @@ alternativa conservadora, marcada como `ASSUMPTION`, com uma rota clara de subst
 | `SERVER_OS` | Linux | ASSUMPTION — consistente com o restante da infraestrutura do operador |
 | `AGENT_OS_LIST` | Linux, Windows, macOS | ASSUMPTION — os três já são suportados pelos clientes Tailscale/Headscale reaproveitados |
 | `IMPLEMENTATION_LANGUAGE` | Go | ASSUMPTION — nenhum padrão organizacional obriga linguagem; Go interopera com o código-fonte do Headscale e compila agentes single-binary para os três SOs |
-| `DATABASE` | PostgreSQL | ASSUMPTION — motor suportado nativamente pelo Headscale em produção e compatível com o padrão de modelagem em 3FN |
+| `DATABASE` | PostgreSQL para o Management Server; SQLite para o estado interno do Headscale | ASSUMPTION/correção verificada — a config oficial do Headscale v0.29.3 desaconselha explicitamente Postgres para seu próprio armazenamento ("highly discouraged... all new development is done with SQLite in mind") e recomenda SQLite. Postgres permanece o motor do Management Server (dados de negócio: sessões, audit, ACL de produto), que é um banco separado do estado interno do Headscale |
 | `EXPECTED_AGENT_COUNT` | pequeno/médio (< 500) | ASSUMPTION — evita HA/sharding prematuro; revisitar se a base crescer |
 | `INFRASTRUCTURE_PROVIDER` | VPS/bare-metal próprio + Cloudflare | ASSUMPTION |
 | `PUBLIC_HOSTNAME` | `remoto.darckware.net` | Fornecido pelo usuário |
