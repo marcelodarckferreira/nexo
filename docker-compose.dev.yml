@@ -1,0 +1,16 @@
+name: remoto-dev
+
+services:
+  headscale:
+    image: headscale/headscale:0.29.3
+    container_name: remoto-dev-headscale
+    command: serve
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./infra/headscale/config.dev.yaml:/etc/headscale/config.yaml:ro
+      - ./infra/headscale/acl-policy.hujson:/etc/headscale/acl-policy.hujson:ro
+      - remoto_dev_headscale_data:/var/lib/headscale
+
+volumes:
+  remoto_dev_headscale_data:

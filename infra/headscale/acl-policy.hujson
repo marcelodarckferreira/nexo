@@ -1,0 +1,4 @@
+// Fase 1 — Tarefa 1: política temporária "allow all" (comportamento padrão do Headscale
+// para uma política vazia). A Tarefa 3 substitui este arquivo por uma política default-deny
+// com grants explícitos.
+{}
