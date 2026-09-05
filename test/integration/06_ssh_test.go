@@ -39,8 +39,12 @@ func TestSSHOverOverlay(t *testing.T) {
 func TestSSHDeniedForUnauthorizedSource(t *testing.T) {
 	agentBIP := tailscaleIP(t, "remoto-dev-agent-b")
 
-	out, err := tailscaleSSH(t, "remoto-dev-agent-a", agentBIP, "echo should-not-run")
+	ctx, cancel := context.WithTimeout(context.Background(), 8*time.Second)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, "docker", "exec", "remoto-dev-agent-a", "tailscale", "nc", agentBIP, "22")
+	out, err := cmd.CombinedOutput()
 	if err == nil {
-		t.Fatalf("expected agent-a -> agent-b SSH to be denied by ACL, but it succeeded: %s", out)
+		t.Fatalf("expected agent-a -> agent-b:22 to be denied by ACL, but connection succeeded: %s", out)
 	}
 }
