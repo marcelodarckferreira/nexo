@@ -3,7 +3,7 @@
 **Projeto:** Remoto
 **Autor:** Marcelo (via Porthus / Claude Code)
 **Data:** 2026-09-04
-**Versão:** 1.0
+**Versão:** 1.1
 **Status:** Aprovado para plano de implementação
 **Classificação:** Uso interno
 
@@ -199,6 +199,25 @@ são o produto Remoto propriamente dito, construídos por cima dessa infraestrut
 | **Remote Agent** | Processo instalado no dispositivo gerenciado. Combina o cliente Tailscale/Headscale (overlay) com um agente de controle próprio (heartbeat, metadados, execução de comandos autorizados). |
 | **HTTPS Gateway / Reverse Proxy** | Plane A. Publica serviços internos (`127.0.0.1:3333`) via `remoto.darckware.net`. |
 | **Motor de sessões e audit logging** | Registra toda sessão de suporte/administração (quem, quando, para qual dispositivo, o que foi executado), com retenção e formato compatíveis com os padrões organizacionais de governança de dados. |
+
+### 5.1 Indicador visual de sessão ativa ("Client Mode")
+
+Enquanto uma sessão de suporte/administração estiver ativa em um dispositivo gerenciado, o Remote
+Agent exibe na tela do dispositivo um indicador visual persistente contendo a logomarca Darckware
+(`assets/branding/darckware-lockup-dark.svg`) e uma indicação textual de que uma sessão remota está
+em andamento (ex.: "Suporte remoto ativo").
+
+Regras do indicador:
+
+- aparece automaticamente ao início da sessão e desaparece automaticamente ao encerramento — não é
+  configurável para iniciar oculto;
+- não pode ser ocultado, minimizado ou encerrado pelo lado do operador remoto — apenas o usuário
+  local do dispositivo ou o encerramento real da sessão o removem;
+- é um requisito de transparência ao usuário do dispositivo, consistente com a seção 1.1 (nenhum
+  agente oculto, furtivo ou de vigilância não identificável).
+
+Detalhamento de implementação (overlay always-on-top, comportamento em múltiplos monitores,
+equivalentes por SO) fica para o plano de implementação da Fase 4.
 
 ---
 
